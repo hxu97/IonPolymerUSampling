@@ -1,0 +1,15 @@
+# vim:tf=plumed 
+# Basic group 
+membrane: GROUP NDX_FILE=index.ndx NDX_GROUP=Membrane
+ion: GROUP NDX_FILE=index.ndx NDX_GROUP=MG
+oxygen: GROUP NDX_FILE=index.ndx NDX_GROUP=oxygen_in_water
+com_membrane: COM ATOMS=1-14760 MASS NOPBC
+# Dimension 1 of umbrella sampling
+cv_dist: DISTANCE ATOMS=com_membrane,ion COMPONENTS
+cv1: RESTRAINT ARG=cv_dist.z KAPPA=200.0 AT=XXX
+# Dimension 2 of umbrella sampling
+# Cutoff need to be changed according to the ion type   
+cv_cn: COORDINATION GROUPA=ion GROUPB=oxygen R_0=0.30 NN=12 MM=24
+cv2: RESTRAINT ARG=cv_cn KAPPA=200.0 AT=XXX
+# Data Output
+PRINT ARG=cv_dist.z,cv_cn,cv1.bias,cv2.bias FILE=1_UmbrellaSampling/Conf0/Coord10/colvar0_10.col STRIDE=1000

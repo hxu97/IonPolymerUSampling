@@ -1,0 +1,75 @@
+; Simulation descrition 
+title   =   Umbrella sampling for sepcific configureation 
+; Environment setting 
+    ; System setting 
+    ; vdW setting 
+vdwtype =   cutoff 
+cutoff-scheme   =   Verlet 
+vdw-modifier    =   force-switch 
+rvdw    =   1.2 
+rvdw-switch =   1.0 
+    ; Coulomb setting
+coulombtype =   PME 
+pme-order   =   4  
+rcoulomb    =   1.2 
+    ; Bond setting 
+constraints =   h-bonds 
+constraint-algorithm    =   LINCS 
+lincs-iter  =   1 
+lincs-order =   4 
+    ; Neighbor list setting 
+rlist   =   1.2 
+nstlist =   10 
+DispCorr    =   no 
+fourierspacing  =   0.1 
+    ; Output setting 
+nstxout =   10000
+nstvout =   10000 
+nstfout =   10000 
+nstenergy   =   10000 
+nstlog  =   10000 
+nstxout-compressed  =   1000000
+; Molecular dynamics simulation setting 
+pbc =   xyz 
+periodic-molecules  =   yes 
+gen-vel =   no 
+gen-temp    =   300 
+gen-seed    =   -1 
+integrator  =   md-vv 
+nsteps  =   80000000 
+dt  =   0.001 
+continuation    =   yes 
+comm-mode   =   linear 
+    ; Temperature 
+tcoupl  =   nose-hoover 
+tc-grps =   Membrane Water_and_ions 
+tau-t   =   0.1 0.1 
+ref-t   =   300 300 
+nsttcouple  =   1 
+nh-chain-length =   1
+    ; Pressure 
+pcoupltype  =   isotropic 
+pcoupl  =   Parrinello-rahman 
+tau-p   =   10 
+ref-p   =   1 
+refcoord-scaling    =   all 
+compressibility =   4.5e-5
+    ; Pull 
+pull    =   yes 
+pull-nstxout    =   500 
+pull-nstfout    =   500 
+pull-ngroups    =   2 
+pull-ncoords    =   1 
+pull-group1-name    =   Membrane 
+pull-group2-name 	=	 CA 
+pull-group1-pbcatom =   -1 
+pull-pbc-ref-prev-step-com  =   yes 
+pull-coord1-type    =   umbrella 
+pull-coord1-geometry    =   direction 
+pull-coord1-groups  =   1 2 
+pull-coord1-dim =   N N Y 
+pull-coord1-start   =   no 
+pull-coord1-init	=	XX 
+pull-coord1-vec =   0 0 1 
+pull-coord1-rate    =   0.0 
+pull-coord1-k   =   200 

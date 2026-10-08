@@ -1,0 +1,55 @@
+; Simulation description 
+title   =   Annealing membrane to eliminate intrinsic stress
+; Environment setting 
+
+    ; System setting 
+    ; vdW setting 
+vdwtype =   cutoff 
+cutoff-scheme   =   Verlet 
+vdw-modifier    =   force-switch 
+rvdw    =   1.2 
+rvdw-switch =   1.0 
+    ; Coulomb setting 
+coulombtype =   PME 
+pme-order   =   4
+rcoulomb    =   1.2 
+    ; Bond setting 
+constraints =   h-bonds 
+constraint-algorithm    =   LINCS 
+lincs-iter  =   1 
+lincs-order =   4 
+fourierspacing  =   0.1 
+    ; Neighbor list setting 
+rlist   =   1.2 
+nstlist =   10 
+DispCorr    =   no 
+    ; Output setting 
+nstxout =   200000 
+nstvout =   200000 
+nstfout =   200000 
+nstenergy   =   200000 
+nstlog  =   200000
+nstxout-compressed  =   1000000
+; Molecular dynamics simulation setting 
+pbc =   xyz 
+periodic-molecules  =   yes 
+gen-vel =   no 
+gen-temp    =   300 
+gen-seed    =   -1 
+continuation    =   no 
+integrator  =   md 
+nsteps  =   20000000 
+dt  =   0.001 
+comm-mode   =   linear 
+    ; Temperature 
+tcoupl  =   v-rescale 
+tc-grps =   System 
+tau-t   =   0.1 
+ref-t   =   300 
+    ; Pressure 
+pcoupl  =   no 
+    ; Annealing
+annealing   =   periodic 
+annealing-npoints   =   5 
+annealing-time  =   0 500 1000 2000 2500 
+annealing-temp  =   300 300 600 600 300 
